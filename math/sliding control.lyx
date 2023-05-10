@@ -1,0 +1,483 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Постановка задачи
+\end_layout
+
+\begin_layout Standard
+Рассматриваю линейную систему
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{x}=A\left(t\right)x+B\left(t\right)u,
+\]
+
+\end_inset
+
+
+\begin_inset Formula $x\in\mathbb{R}^{3},u\in\mathbb{R}.$
+\end_inset
+
+ Нахожу стабилизирующее решение
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u=K\left(t\right)x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{x}=\underbrace{A\left(t\right)x+B\left(t\right)K\left(t\right)}_{\equiv F\left(t\right)}x.
+\]
+
+\end_inset
+
+Добавка к управлению 
+\begin_inset Formula $w$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u=K\left(t\right)x+w
+\]
+
+\end_inset
+
+будет отвечать за скользящий режим.
+ Тогда замкнутая система будет иметь вид
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{x}=F\left(t\right)x+B\left(t\right)w,
+\]
+
+\end_inset
+
+управление 
+\begin_inset Formula $w$
+\end_inset
+
+ будет принимать значения 
+\begin_inset Formula $\pm1$
+\end_inset
+
+.
+ Нужно решить какой знак выбрать.
+\end_layout
+
+\begin_layout Subsection
+Скользящий режим
+\end_layout
+
+\begin_layout Standard
+Пусть уравнение 
+\begin_inset Formula $\dot{x}=F\left(t\right)x$
+\end_inset
+
+ имеет два решения 
+\begin_inset Formula $b_{1}\left(t\right),b_{2}\left(t\right)$
+\end_inset
+
+.
+ Эти решения определяют инвариантное множество 
+\begin_inset Formula 
+\[
+\mathcal{B}\equiv\mathbf{span}\left(b_{1}\left(t\right),b_{2}\left(t\right)\right)
+\]
+
+\end_inset
+
+Построю вектор нормали 
+\begin_inset Formula $n\left(t\right)$
+\end_inset
+
+ к этому инвариантному множеству: 
+\begin_inset Formula 
+\[
+\left\Vert n\right\Vert =1,\quad n^{T}b_{1}=0,\quad n^{T}b_{2}=0.
+\]
+
+\end_inset
+
+Разложу произвольный вектор 
+\begin_inset Formula $x$
+\end_inset
+
+ на сумму двух ортогональных векторов 
+\begin_inset Formula $n\left(t\right)$
+\end_inset
+
+ и 
+\begin_inset Formula $x_{\parallel}\in\mathcal{B}:$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x=zn\left(t\right)+x_{\parallel},
+\]
+
+\end_inset
+
+отсюда следует, что 
+\begin_inset Formula $z=n^{T}x$
+\end_inset
+
+.
+ Тогда
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{x}=\dot{z}n\left(t\right)+z\dot{n}\left(t\right)+x_{\parallel}=F\left(t\right)\left(zn\left(t\right)+x_{\parallel}\right)+B\left(t\right)w
+\]
+
+\end_inset
+
+Найдём динамику 
+\begin_inset Formula $z$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{z}n\left(t\right)+z\dot{n}\left(t\right)+x_{\parallel}=F\left(t\right)\left(zn\left(t\right)+x_{\parallel}\right)+B\left(t\right)w
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+\begin_inset Formula 
+\[
+\dot{z}=\left(n^{T}Fx_{\perp}n+n^{T}Fx_{\parallel}\right)+n^{T}Bw
+\]
+
+\end_inset
+
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+нужно взять такой 
+\begin_inset Formula $w$
+\end_inset
+
+, чтобы 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{z}=...-\mathbf{sign}z
+\]
+
+\end_inset
+
+Значит 
+\begin_inset Formula 
+\[
+w=-\frac{\mathbf{sign}n^{T}x}{n^{T}B}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Скользящий режим для линейной системы
+\end_layout
+
+\begin_layout Standard
+Рассмотрим систему
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\ddot{x}=u
+\]
+
+\end_inset
+
+Выберем поверхность скольжения 
+\begin_inset Formula 
+\[
+S:\left\{ \left(x,\dot{x}\right)\in\mathbb{R}^{2}\,\vert\,cx+\dot{x}=0\right\} 
+\]
+
+\end_inset
+
+На этой поверхности динамика устойчива при 
+\begin_inset Formula $c>0$
+\end_inset
+
+, поскольку 
+\begin_inset Formula 
+\[
+\dot{x}=-cx
+\]
+
+\end_inset
+
+Вектор нормали к поверхности:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+n=\frac{\left[c,1\right]}{\sqrt{1+c^{2}}}.
+\]
+
+\end_inset
+
+Расстояние (с учётом знака) до поверхности 
+\begin_inset Formula 
+\[
+z=n\left[\begin{array}{c}
+x\\
+\dot{x}
+\end{array}\right].
+\]
+
+\end_inset
+
+Динамика вдоль нормали: 
+\begin_inset Formula 
+\[
+\dot{z}=n\left[\begin{array}{c}
+\dot{x}\\
+\ddot{x}
+\end{array}\right]=n\left[\begin{array}{c}
+\dot{x}\\
+u
+\end{array}\right]
+\]
+
+\end_inset
+
+потребуем
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{z}=-k\mathrm{sign}z
+\]
+
+\end_inset
+
+тогда
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u=\frac{-k\mathrm{sign}z-n_{1}\dot{x}}{n_{2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Twisting
+\end_layout
+
+\begin_layout Standard
+Приводим динамику 
+\begin_inset Formula $\dot{z}$
+\end_inset
+
+ к виду
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\dot{z} & =\phi\left(\dots\right)-k_{1}\sqrt{\left|z\right|}\mathrm{sign}z+v\\
+\dot{v} & =-k_{2}\mathrm{sign}z
+\end{align*}
+
+\end_inset
+
+где 
+\begin_inset Formula $\phi\left(\dots\right)$
+\end_inset
+
+ – ограниченная функция; коэффициенты выбираем с учётом ограничений:
+\begin_inset Formula 
+\begin{align*}
+k_{1} & >2\delta\\
+k_{2} & >k_{1}\frac{5\delta k_{1}+4\delta^{2}}{2\left(k_{1}-2\delta\right)}\\
+\left|\phi\right| & \leq\delta\sqrt{\sigma}.
+\end{align*}
+
+\end_inset
+
+Получится
+\begin_inset Formula 
+\[
+\dot{z}=n\left[\begin{array}{c}
+\dot{x}\\
+u
+\end{array}\right]=-k_{1}\sqrt{\left|z\right|}\mathrm{sign}z+v
+\]
+
+\end_inset
+
+тогда
+\begin_inset Formula 
+\begin{align*}
+u & =\frac{-k_{1}\sqrt{\left|z\right|}\mathrm{sign}z+v-n_{1}\dot{x}}{n_{2}}\\
+v & =-k_{2}\int_{0}^{t}\mathrm{sign}zdt
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+—————————————
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+k_{1} & =4\delta\\
+k_{2} & >1.5k_{1}^{2}\\
+\left|\phi\right| & \leq\delta\sqrt{\sigma}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
