@@ -1,0 +1,467 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Section*
+Наблюдатель на скользящем режиме
+\end_layout
+
+\begin_layout Standard
+Рассматриваем линейную систему
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\dot{x} & =Ax+Bu\\
+y & =Cx
+\end{align*}
+
+\end_inset
+
+делаем замену
+\begin_inset Formula 
+\[
+\left(\begin{array}{c}
+x_{1}\\
+y
+\end{array}\right)=\left(\begin{array}{c}
+C_{\perp}\\
+C
+\end{array}\right)x,
+\]
+
+\end_inset
+
+где 
+\begin_inset Formula $C_{\perp}$
+\end_inset
+
+ – составлена из ортогонального дополнения матрицы 
+\begin_inset Formula $C$
+\end_inset
+
+.
+ Таким образом, часть нового вектора состояние станет измеряемой.
+ Обратное преобразование будет
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x=\left(\begin{array}{c}
+C_{\perp}\\
+C
+\end{array}\right)^{-1}\left(\begin{array}{c}
+x_{1}\\
+y
+\end{array}\right)
+\]
+
+\end_inset
+
+выпишем динамику для нового состояние
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\frac{d}{dt}\left(\begin{array}{c}
+x_{1}\\
+y
+\end{array}\right) & =\left(\begin{array}{c}
+C_{\perp}\\
+C
+\end{array}\right)\frac{d}{dt}x\\
+\frac{d}{dt}\left(\begin{array}{c}
+x_{1}\\
+y
+\end{array}\right) & =\left(\begin{array}{c}
+C_{\perp}\\
+C
+\end{array}\right)A\left(\begin{array}{c}
+C_{\perp}\\
+C
+\end{array}\right)^{-1}\left(\begin{array}{c}
+x_{1}\\
+y
+\end{array}\right)+\left(\begin{array}{c}
+C_{\perp}\\
+C
+\end{array}\right)Bu
+\end{align*}
+
+\end_inset
+
+получим
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\dot{x}_{1} & =A_{11}x_{1}+A_{12}y+B_{1}u\\
+\dot{y} & =A_{21}x_{1}+A_{22}y+B_{2}u
+\end{align*}
+
+\end_inset
+
+где использованы обозначения
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\left(\begin{array}{cc}
+A_{11} & A_{12}\\
+A_{21} & A_{22}
+\end{array}\right) & \equiv\left(\begin{array}{c}
+C_{\perp}\\
+C
+\end{array}\right)A\left(\begin{array}{c}
+C_{\perp}\\
+C
+\end{array}\right)^{-1}\\
+\left(\begin{array}{c}
+B_{1}\\
+B_{2}
+\end{array}\right) & \equiv\left(\begin{array}{c}
+C_{\perp}\\
+C
+\end{array}\right)B.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Для этой системы строим наблюдатель следующим образом
+\begin_inset Formula 
+\begin{align*}
+\dot{\hat{x}}_{1} & =A_{11}\hat{x}_{1}+A_{12}\hat{y}+B_{1}u+Lv\\
+\dot{\hat{y}} & =A_{21}\hat{x}_{1}+A_{22}\hat{y}+B_{2}u-v
+\end{align*}
+
+\end_inset
+
+где 
+\begin_inset Formula 
+\[
+v_{i}=M\mathbf{sign}\left(\hat{y}_{i}-y_{i}\right).
+\]
+
+\end_inset
+
+В отклонениях 
+\begin_inset Formula $e_{1}=\hat{x}_{1}-x_{1}$
+\end_inset
+
+, 
+\begin_inset Formula $e_{y}=\hat{y}-y$
+\end_inset
+
+ получим 
+\begin_inset Formula 
+\begin{align*}
+\dot{x}_{1}+\dot{e}_{1} & =A_{11}x_{1}+A_{11}e_{1}+A_{12}y+A_{12}e_{y}+B_{1}u+Lv\\
+\dot{y}+\dot{e}_{y} & =A_{21}x_{1}+A_{21}e_{1}+A_{22}y+A_{22}e_{y}+B_{2}u-v
+\end{align*}
+
+\end_inset
+
+вычитаем динамику исходной системы
+\begin_inset Formula 
+\begin{align*}
+\dot{x}_{1} & =A_{11}x_{1}+A_{12}y+B_{1}u\\
+\dot{y} & =A_{21}x_{1}+A_{22}y+B_{2}u
+\end{align*}
+
+\end_inset
+
+остаётся
+\begin_inset Formula 
+\begin{align*}
+\dot{e}_{1} & =A_{11}e_{1}+A_{12}e_{y}+Lv\\
+\dot{e}_{y} & =A_{21}e_{1}+A_{22}e_{y}-v.
+\end{align*}
+
+\end_inset
+
+Скользящий режим должен задавить 
+\begin_inset Formula $e_{y}$
+\end_inset
+
+ в ноль, останется
+\begin_inset Formula 
+\begin{align*}
+\dot{e}_{1} & =A_{11}e_{1}
+\end{align*}
+
+\end_inset
+
+тогда 
+\begin_inset Formula $A_{11}$
+\end_inset
+
+ должна быть гурвицевой.
+\end_layout
+
+\begin_layout Section*
+Пример
+\end_layout
+
+\begin_layout Standard
+Система второго порядка
+\begin_inset Formula 
+\[
+\ddot{x}=ku+a
+\]
+
+\end_inset
+
+измеряется 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Допустим, неизвестно 
+\begin_inset Formula $a$
+\end_inset
+
+.
+ Перепишем
+\begin_inset Formula 
+\begin{align*}
+\dot{a} & =0\\
+\dot{x}_{2} & =a+ku\\
+\dot{x}_{1} & =x_{2}\\
+y & =x_{1}
+\end{align*}
+
+\end_inset
+
+тогда 
+\begin_inset Formula $x\equiv\left(\begin{array}{c}
+a\\
+x_{2}\\
+x_{1}
+\end{array}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $A=\left(\begin{array}{ccc}
+0 & 0 & 0\\
+1 & 0 & 0\\
+0 & 1 & 0
+\end{array}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $C=\left(\begin{array}{ccc}
+0 & 0 & 1\end{array}\right)$
+\end_inset
+
+.
+ Матрица наблюдаемости
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+K=\left(\begin{array}{c}
+C\\
+CA\\
+CAA
+\end{array}\right)=\left(\begin{array}{ccc}
+0 & 0 & 1\\
+0 & 1 & 0\\
+1 & 0 & 0
+\end{array}\right)
+\]
+
+\end_inset
+
+имеет полный ранг.
+ Выделим 
+\begin_inset Formula $A_{11}=\left(\begin{array}{cc}
+0 & 0\\
+1 & 0
+\end{array}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $A_{12}=\left(\begin{array}{c}
+0\\
+0
+\end{array}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $A_{21}=\left(\begin{array}{cc}
+0 & 1\end{array}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $A_{22}=0$
+\end_inset
+
+, 
+\begin_inset Formula $B_{1}=\left(\begin{array}{c}
+0\\
+k
+\end{array}\right)$
+\end_inset
+
+, 
+\begin_inset Formula $B_{2}=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

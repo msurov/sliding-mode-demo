@@ -76,238 +76,6 @@
 \begin_body
 
 \begin_layout Section
-Постановка задачи
-\end_layout
-
-\begin_layout Standard
-Рассматриваю линейную систему
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dot{x}=A\left(t\right)x+B\left(t\right)u,
-\]
-
-\end_inset
-
-
-\begin_inset Formula $x\in\mathbb{R}^{3},u\in\mathbb{R}.$
-\end_inset
-
- Нахожу стабилизирующее решение
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-u=K\left(t\right)x
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dot{x}=\underbrace{A\left(t\right)x+B\left(t\right)K\left(t\right)}_{\equiv F\left(t\right)}x.
-\]
-
-\end_inset
-
-Добавка к управлению 
-\begin_inset Formula $w$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-u=K\left(t\right)x+w
-\]
-
-\end_inset
-
-будет отвечать за скользящий режим.
- Тогда замкнутая система будет иметь вид
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dot{x}=F\left(t\right)x+B\left(t\right)w,
-\]
-
-\end_inset
-
-управление 
-\begin_inset Formula $w$
-\end_inset
-
- будет принимать значения 
-\begin_inset Formula $\pm1$
-\end_inset
-
-.
- Нужно решить какой знак выбрать.
-\end_layout
-
-\begin_layout Subsection
-Скользящий режим
-\end_layout
-
-\begin_layout Standard
-Пусть уравнение 
-\begin_inset Formula $\dot{x}=F\left(t\right)x$
-\end_inset
-
- имеет два решения 
-\begin_inset Formula $b_{1}\left(t\right),b_{2}\left(t\right)$
-\end_inset
-
-.
- Эти решения определяют инвариантное множество 
-\begin_inset Formula 
-\[
-\mathcal{B}\equiv\mathbf{span}\left(b_{1}\left(t\right),b_{2}\left(t\right)\right)
-\]
-
-\end_inset
-
-Построю вектор нормали 
-\begin_inset Formula $n\left(t\right)$
-\end_inset
-
- к этому инвариантному множеству: 
-\begin_inset Formula 
-\[
-\left\Vert n\right\Vert =1,\quad n^{T}b_{1}=0,\quad n^{T}b_{2}=0.
-\]
-
-\end_inset
-
-Разложу произвольный вектор 
-\begin_inset Formula $x$
-\end_inset
-
- на сумму двух ортогональных векторов 
-\begin_inset Formula $n\left(t\right)$
-\end_inset
-
- и 
-\begin_inset Formula $x_{\parallel}\in\mathcal{B}:$
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-x=zn\left(t\right)+x_{\parallel},
-\]
-
-\end_inset
-
-отсюда следует, что 
-\begin_inset Formula $z=n^{T}x$
-\end_inset
-
-.
- Тогда
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dot{x}=\dot{z}n\left(t\right)+z\dot{n}\left(t\right)+x_{\parallel}=F\left(t\right)\left(zn\left(t\right)+x_{\parallel}\right)+B\left(t\right)w
-\]
-
-\end_inset
-
-Найдём динамику 
-\begin_inset Formula $z$
-\end_inset
-
-:
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dot{z}n\left(t\right)+z\dot{n}\left(t\right)+x_{\parallel}=F\left(t\right)\left(zn\left(t\right)+x_{\parallel}\right)+B\left(t\right)w
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Standard
-
-\family roman
-\series medium
-\shape up
-\size normal
-\emph off
-\bar no
-\strikeout off
-\xout off
-\uuline off
-\uwave off
-\noun off
-\color none
-\begin_inset Formula 
-\[
-\dot{z}=\left(n^{T}Fx_{\perp}n+n^{T}Fx_{\parallel}\right)+n^{T}Bw
-\]
-
-\end_inset
-
-
-\family default
-\series default
-\shape default
-\size default
-\emph default
-\bar default
-\strikeout default
-\xout default
-\uuline default
-\uwave default
-\noun default
-\color inherit
-нужно взять такой 
-\begin_inset Formula $w$
-\end_inset
-
-, чтобы 
-\end_layout
-
-\begin_layout Standard
-\begin_inset Formula 
-\[
-\dot{z}=...-\mathbf{sign}z
-\]
-
-\end_inset
-
-Значит 
-\begin_inset Formula 
-\[
-w=-\frac{\mathbf{sign}n^{T}x}{n^{T}B}
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Section
 Скользящий режим для линейной системы
 \end_layout
 
@@ -459,11 +227,7 @@ v & =-k_{2}\int_{0}^{t}\mathrm{sign}zdt
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
-—————————————
+Оценики коэффициентов:
 \end_layout
 
 \begin_layout Standard
@@ -472,6 +236,279 @@ v & =-k_{2}\int_{0}^{t}\mathrm{sign}zdt
 k_{1} & =4\delta\\
 k_{2} & >1.5k_{1}^{2}\\
 \left|\phi\right| & \leq\delta\sqrt{\sigma}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Линейная неавтономная система
+\end_layout
+
+\begin_layout Standard
+Рассматриваю линейную систему
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{x}=A\left(t\right)x+B\left(t\right)u,
+\]
+
+\end_inset
+
+
+\begin_inset Formula $x\in\mathbb{R}^{3},u\in\mathbb{R}.$
+\end_inset
+
+ Нахожу стабилизирующее решение
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u=K\left(t\right)x
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{x}=\underbrace{A\left(t\right)x+B\left(t\right)K\left(t\right)}_{\equiv F\left(t\right)}x.
+\]
+
+\end_inset
+
+Добавка к управлению 
+\begin_inset Formula $w$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+u=K\left(t\right)x+w
+\]
+
+\end_inset
+
+будет отвечать за скользящий режим.
+ Тогда замкнутая система будет иметь вид
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{x}=F\left(t\right)x+B\left(t\right)w,
+\]
+
+\end_inset
+
+управление 
+\begin_inset Formula $w$
+\end_inset
+
+ будет принимать значения 
+\begin_inset Formula $\pm1$
+\end_inset
+
+.
+ Нужно решить какой знак выбрать.
+\end_layout
+
+\begin_layout Subsection
+Декомпозиция динамики
+\end_layout
+
+\begin_layout Standard
+Пусть уравнение 
+\begin_inset Formula $\dot{x}=A\left(t\right)x$
+\end_inset
+
+ имеет два решения 
+\begin_inset Formula $b_{1}\left(t\right),b_{2}\left(t\right)$
+\end_inset
+
+.
+ Эти решения определяют инвариантное множество 
+\begin_inset Formula 
+\[
+\mathcal{B}\equiv\mathbf{span}\left(b_{1}\left(t\right),b_{2}\left(t\right)\right)
+\]
+
+\end_inset
+
+Построю вектор нормали 
+\begin_inset Formula $n\left(t\right)$
+\end_inset
+
+ к этому инвариантному множеству: 
+\begin_inset Formula 
+\[
+\left\Vert n\right\Vert =1,\quad n^{T}b_{1}=0,\quad n^{T}b_{2}=0.
+\]
+
+\end_inset
+
+Разложу произвольный вектор 
+\begin_inset Formula $x$
+\end_inset
+
+ на сумму двух ортогональных векторов 
+\begin_inset Formula $zn\left(t\right)$
+\end_inset
+
+ и 
+\begin_inset Formula $x_{\parallel}\in\mathcal{B}:$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+x=zn\left(t\right)+x_{\parallel},
+\]
+
+\end_inset
+
+отсюда следует, что 
+\begin_inset Formula $z=n^{T}x$
+\end_inset
+
+.
+ Тогда
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\dot{x} & =\dot{z}n\left(t\right)+z\dot{n}\left(t\right)+\dot{x}_{\parallel}\\
+\dot{x} & =A\left(t\right)\left(zn\left(t\right)+x_{\parallel}\right)+Bw
+\end{align*}
+
+\end_inset
+
+Выразим отсюда динамику 
+\begin_inset Formula $z$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{z}n\left(t\right)+z\dot{n}\left(t\right)+\dot{x}_{\parallel}=A\left(t\right)\left(zn\left(t\right)+x_{\parallel}\right)+Bw
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dot{z}+zn^{T}\dot{n}+n^{T}\dot{x}_{\parallel}=n^{T}A\left(zn+x_{\parallel}\right)+n^{T}Bw
+\]
+
+\end_inset
+
+
+\begin_inset Formula 
+\[
+\dot{z}=\underbrace{n^{T}\left(Fx_{\parallel}-\dot{x}_{\parallel}\right)}_{=:\phi\left(t,x_{\parallel},\dot{x}_{\parallel}\right)}+\underbrace{n^{T}An}_{=:\psi\left(t\right)}z+n^{T}Bw
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{z}=\phi+n^{T}Anz+n^{T}Bw
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Скользящий режим
+\end_layout
+
+\begin_layout Standard
+Выбираю динамику для 
+\begin_inset Formula $z$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{z}=-k\mathbf{sign}z
+\]
+
+\end_inset
+
+тогда 
+\begin_inset Formula 
+\[
+n^{T}Anz+n^{T}Bw=-k\mathbf{sign}z
+\]
+
+\end_inset
+
+тогда 
+\begin_inset Formula 
+\begin{align*}
+w & =\frac{-k\mathbf{sign}z-n^{T}Anz}{n^{T}B}
+\end{align*}
+
+\end_inset
+
+динамика замкнутой системы будет 
+\begin_inset Formula 
+\[
+\dot{z}=\phi-k\mathbf{sign}z
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Super-Twist
+\end_layout
+
+\begin_layout Standard
+Выбираем динамику в виде
+\begin_inset Formula 
+\begin{align*}
+\dot{z} & =-k_{1}\sqrt{\left|z\right|}\mathrm{sign}z+v\\
+\dot{v} & =-k_{2}\mathrm{sign}z
+\end{align*}
+
+\end_inset
+
+тогда 
+\begin_inset Formula 
+\begin{align*}
+w & =\frac{-k_{1}\sqrt{\left|z\right|}\mathrm{sign}z+v-n^{T}Anz}{n^{T}B}\\
+\dot{v} & =-k_{2}\int_{0}^{t}\mathrm{sign}zdt
 \end{align*}
 
 \end_inset

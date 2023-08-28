@@ -1,3 +1,3 @@
-from .test_sliding_mode import test
+from .test_sliding_derivatives import test
 
 test()
