@@ -1,12 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from .integrator import solve_ivp_fixed
 from scipy.interpolate import make_interp_spline
-
-sign = np.sign
-
-def spow(x, a):
-    return sign(x) * pow(abs(x), a)
+from .integrator import solve_ivp_fixed
+from .diff_filters import DiffFilter, SlidingDiffFilter, sign, spow
 
 def derivatives_estimator_test():
     lam = [1.1, 1.5, 2., 3.]
@@ -32,21 +28,65 @@ def derivatives_estimator_test():
     sol = solve_ivp_fixed(sys, [t[0], t[-1]], z0, t_eval=t, max_step=1e-3)
 
     plt.figure('test derivatives estimation')
-    plt.subplot(311)
+    ax = plt.subplot(311)
     plt.plot(sol.t, f(sol.t), '--')
     plt.plot(sol.t, sol.y[0])
     plt.grid(True)
 
-    plt.subplot(312)
+    ax = plt.subplot(312, sharex=ax)
     plt.plot(sol.t, f(sol.t, 1), '--')
     plt.plot(sol.t, sol.y[1])
     plt.grid(True)
 
-    plt.subplot(313)
+    ax = plt.subplot(313, sharex=ax)
     plt.plot(sol.t, f(sol.t, 2), '--')
     plt.plot(sol.t, sol.y[2])
     plt.grid(True)
+
+    plt.tight_layout()
     plt.show()
+
+
+def diff_filters_benchmark():
+    np.random.seed(0)
+
+    args = np.linspace(0, 10, 15)
+    vals = np.random.rand(*args.shape)
+    sp = make_interp_spline(args, vals, k=5)
+
+    step = 20e-3
+    t = np.arange(sp.t[0], sp.t[-1], step)
+    x = sp(t)
+    xd = x + 1e-2 * np.random.normal(size=x.shape)
+
+    diff_filter1 = DiffFilter(0.05)
+    output = [diff_filter1(*v) for v in zip(t, xd)]
+    s0,s1 = zip(*output)
+
+    diff_filter2 = SlidingDiffFilter(10.)
+    output = [diff_filter2(*v) for v in zip(t, xd)]
+    w0,w1,_ = zip(*output)
+
+    plt.figure('Compare derivative estimators')
+    ax = plt.subplot(211)
+    plt.plot(t, s0, label=R'$\frac{1}{(Ts+1)^2}$')
+    plt.plot(t, w0, label=R'Sliding mode filter')
+    plt.plot(t, xd, '-.', label=R'noised')
+    plt.plot(t, sp(t), '--', label=R'original')
+    plt.grid(True)
+    plt.legend()
+
+    ax = plt.subplot(212, sharex=ax)
+    plt.plot(t, s1, label=R'$\frac{s}{(Ts+1)^2}$')
+    plt.plot(t, w1, label=R'Sliding mode filter')
+    plt.plot(t, sp(t, 1), '--', label=R'original')
+    plt.grid(True)
+    plt.legend()
+
+    plt.tight_layout()
+    plt.show()
+
 
 def test():
     derivatives_estimator_test()
+    diff_filters_benchmark()
