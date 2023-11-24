@@ -2,8 +2,8 @@ from typing import Any
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
-from .simulation import simulate
-from .integrator import Integrator
+from simulation import simulate
+from integrator import Integrator
 
 
 class SuperTwisting:

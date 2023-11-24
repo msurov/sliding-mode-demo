@@ -1,50 +1,87 @@
-import numpy as np
 from scipy.integrate import ode
+import numpy as np
 from copy import copy
+from delay_filter import Delay
+from fixed_step_integrator import FixedStepIntegrator
 
 
-def disturb_variable(u, state_disturbance):
-    if state_disturbance is not None:
-        return u + np.random.normal(u) * state_disturbance
-    return u
+class ControlSystemSimulator:
+    def __init__(self, sysrhs : callable, ctrlinput : callable, 
+                    step : float, u_delay_steps=0, x_delay_steps=0, noise=0):
+        R'''
+            # Parameters
+                * `ctrlinput`: is a control input functor of the type `ctrlinput(t, x) -> u`
+                * `sysrhs` is the system dynamics functor of the type `sysrhs(t, x, u) -> dx/dt`
+                * `step` is the step of discretization in sec
+        '''
+        self.sysrhs = sysrhs
+        self.ctrlinput = ctrlinput
+        self.step = step
+        self.t = None
+        self.u = None
+        self.x = None
+        self.noise = noise
+        self.u_delay_filter = Delay(u_delay_steps)
+        self.x_delay_filter = Delay(x_delay_steps)
 
-def simulate(sys : callable, fb : callable, initial_state : np.ndarray, t_eval : np.ndarray, state_disturbance=None, **ode_kwargs):
-    initial_state = np.array(initial_state)
-    u = fb(t_eval[0], disturb_variable(initial_state, state_disturbance))
-    t_shape = t_eval.shape
+    def run(self, xstart : np.ndarray, tstart : float, tend : float):
+        R'''
+            # Parameters
+                * `xstart`: initial state
+                * `tstart`, `tend` define time interval
+        '''
+        self.t = float(tstart)
+        self.x = np.reshape(xstart, (-1,))
+        xdim, = self.x.shape
+        self.u = np.reshape(self.ctrlinput(tstart, self.x), (-1,))
+        udim, = self.u.shape
 
-    def rhs(t, x):
-        return sys(t, x, u)
+        self.x_delay_filter.set_initial_value(tstart, xstart)
 
-    integrator = ode(rhs)
-    integrator.set_initial_value(initial_state, t_eval[0])
-    integrator.set_integrator('dopri5', **ode_kwargs)
+        def rhs(t, x):
+            return np.reshape(self.sysrhs(t, x, self.u), xdim)
 
-    solx = np.zeros(t_shape + initial_state.shape, float)
-    solx[0] = initial_state
-    solu = np.zeros(t_shape + np.shape(u), float)
-    solu[0] = u
+        integrator = FixedStepIntegrator(rhs, self.step, self.t, self.x)
+        solt = [self.t]
+        solx = [self.x]
+        solu = [self.u]
 
-    if hasattr(fb, 'state'):
-        solfb = [copy(fb.state)]
-    else:
-        solfb = None
+        if hasattr(self.ctrlinput, 'state'):
+            solfb = [copy(self.ctrlinput.state)]
+        else:
+            solfb = []
 
-    for i in range(1, t_shape[0]):
-        if not integrator.successful():
-            print('[warn] integrator doesn\'t feel good')
-            break
-        # step of integration
-        integrator.integrate(t_eval[i])
-        t = integrator.t
-        solx[i] = integrator.y
-        # call controller
-        u = fb(t, disturb_variable(solx[i], state_disturbance))
-        if u is None:
-            break
-        solu[i] = u
-        # save fb state
-        if hasattr(fb, 'state'):
-            solfb.append(copy(fb.state))
+        while self.t < tend:
+            if not integrator.successful():
+                print('[warn] integrator doesn\'t feel good')
+            integrator.integrate(self.t + self.step)
+            self.t = integrator.t
+            self.x = integrator.y
+            x = self.x_delay_filter(self.t, self.x)
+            x += self.noise * np.random.normal(size=x.shape)
+            u = self.ctrlinput(self.t, x)
+            if u is None:
+                break
+        
+            u_delayed = self.u_delay_filter(self.t, u)
+            self.u = np.reshape(u_delayed, udim)
+            solt += [self.t]
+            solx += [self.x.copy()]
+            solu += [self.u.copy()]
 
-    return solx, solu, solfb
+            if hasattr(self.ctrlinput, 'state'):
+                solfb.append(copy(self.ctrlinput.state))
+
+        result = {
+            't': np.asanyarray(solt),
+            'x': np.asanyarray(solx),
+            'u': np.asanyarray(solu),
+            'feedback_internal_state': solfb
+        }
+        return result
+
+
+def simulate(sys, fb, x0, t, u_delay=0, x_delay=0):
+    step = np.mean(np.diff(t))
+    sim = ControlSystemSimulator(sys, fb, step, u_delay_steps=u_delay, x_delay_steps=x_delay)
+    return sim.run(x0, t[0], t[-1])

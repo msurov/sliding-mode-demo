@@ -1,0 +1,376 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Subsection*
+Постановки задачи
+\end_layout
+
+\begin_layout Standard
+Рассматриваем систему
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{y}=bu+c.
+\]
+
+\end_inset
+
+Нужно оценить параметры 
+\begin_inset Formula $b,c$
+\end_inset
+
+, в каждый момент времени известны 
+\begin_inset Formula $y,u$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+В дискретном виде эта система будет
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y_{n+1}=\left(1+a\right)y_{n}+b\Delta tu_{n}+c\Delta t.
+\]
+
+\end_inset
+
+У меня есть 
+\begin_inset Formula $y_{1},y_{2}$
+\end_inset
+
+, можно ли оценить 
+\begin_inset Formula $\frac{c}{b}$
+\end_inset
+
+? Из одного уравнения 2 неизвестные не найти 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{y_{n+1}-y_{n}}{b}-u_{n}\approx\frac{c}{b}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Подход 1
+\end_layout
+
+\begin_layout Standard
+Делаем замену 
+\begin_inset Formula $x\equiv\frac{y}{b}$
+\end_inset
+
+, 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $q\equiv\frac{c}{b}$
+\end_inset
+
+.
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ Переписываем в виде
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\dot{q} & =0\\
+\dot{x} & =u+q
+\end{align*}
+
+\end_inset
+
+матрицы линейной системы
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+A=\left(\begin{array}{cc}
+0 & 0\\
+1 & 0
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+B=\left(\begin{array}{c}
+0\\
+1
+\end{array}\right)
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+C=\left(\begin{array}{cc}
+0 & 1\end{array}\right)
+\]
+
+\end_inset
+
+Наблюдатель в общем виде
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\frac{d}{dt}\hat{q} & =A_{11}\hat{q}+A_{12}\hat{y}+B_{1}u+Lv\\
+\frac{d}{dt}\hat{y} & =A_{21}\hat{q}+A_{22}\hat{y}+B_{2}u-v\\
+v & =M\mathbf{sign}\left(\hat{y}-y\right)
+\end{align*}
+
+\end_inset
+
+Для моей системы
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\frac{d}{dt}\hat{q} & =L\mathbf{sign}\left(\hat{x}-x\right)\\
+\frac{d}{dt}\hat{x} & =\hat{q}+u-M\mathbf{sign}\left(\hat{x}-x\right)
+\end{align*}
+
+\end_inset
+
+проблема в том, что я измеряю 
+\begin_inset Formula $y$
+\end_inset
+
+, а не 
+\begin_inset Formula $x$
+\end_inset
+
+.
+ Чтобы вычислиь 
+\begin_inset Formula $x$
+\end_inset
+
+ нужно знать 
+\begin_inset Formula $b$
+\end_inset
+
+, а он неизвестен.
+\end_layout
+
+\begin_layout Standard
+Можно добавить наблюдатель для 
+\begin_inset Formula $b$
+\end_inset
+
+, но работает он неважно.
+ Динамика наблюдателя
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\dot{\hat{b}} & =L_{b}\mathbf{sign}\left(\hat{b}\hat{x}-y\right)\\
+\dot{\hat{x}} & =u+\hat{q}-M\mathbf{sign}\left(\hat{b}\hat{x}-y\right)
+\end{align*}
+
+\end_inset
+
+динамика ошибки
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\dot{e}_{y} & =\dot{\hat{b}}\hat{x}+\hat{b}\dot{\hat{x}}-\dot{y}\\
+ & =L_{b}\mathbf{sign}\left(\hat{b}\hat{x}-y\right)\hat{x}+\hat{b}\left(u+\hat{q}-M\mathbf{sign}\left(\hat{b}\hat{x}-y\right)\right)-bu-c\\
+ & =L_{b}\mathbf{sign}\left(\hat{b}\hat{x}-y\right)\hat{x}+\left(\hat{b}-b\right)u+\hat{b}\left(\hat{q}-q\right)+\left(\hat{b}-b\right)q-\hat{b}M\mathbf{sign}\left(\hat{b}\hat{x}-y\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Подход 2
+\end_layout
+
+\begin_layout Standard
+Что если известен 
+\begin_inset Formula $c$
+\end_inset
+
+, нужно оценить 
+\begin_inset Formula $b$
+\end_inset
+
+? Получится?
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\dot{y}=bu+c
+\]
+
+\end_inset
+
+Динамика наблюдателя
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+\frac{d}{dt}\hat{b} & =L\mathbf{sign}\left(\hat{y}-y\right)\\
+\frac{d}{dt}\hat{y} & =\hat{b}u+c-M\mathbf{sign}\left(\hat{y}-y\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection*
+Подход 3
+\end_layout
+
+\begin_layout Standard
+Рассматриваем динамику 
+\begin_inset Formula 
+\[
+\dot{y}=bu+c.
+\]
+
+\end_inset
+
+Строим закон адаптации в виде
+\begin_inset Formula 
+\begin{align*}
+\frac{d}{dt}\hat{b} & =-L_{b}\mathbf{sign}\left(u\right)\mathbf{sign}\left(\hat{v}-v\right)\\
+\frac{d}{dt}\hat{c} & =-L_{c}\mathbf{sign}\left(\hat{v}-v\right)\\
+\frac{d}{dt}\hat{v} & =\hat{b}u+\hat{c}-L_{y}\mathbf{sign}\left(\hat{v}-v\right)
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

@@ -1,8 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import make_interp_spline
-from .integrator import solve_ivp_fixed
-from .diff_filters import DiffFilter, SlidingDiffFilter, sign, spow
+from integrator import solve_ivp_fixed
+from diff_filters import DiffFilter, SlidingDiffFilter, sign, spow
+from sliding_mode_demo.common import load_logs_csv
+
 
 def derivatives_estimator_test():
     lam = [1.1, 1.5, 2., 3.]
@@ -57,9 +59,9 @@ def diff_filters_benchmark():
     step = 20e-3
     t = np.arange(sp.t[0], sp.t[-1], step)
     x = sp(t)
-    xd = x + 1e-2 * np.random.normal(size=x.shape)
+    xd = x + 0e-2 * np.random.normal(size=x.shape)
 
-    diff_filter1 = DiffFilter(0.05)
+    diff_filter1 = DiffFilter(0.01)
     output = [diff_filter1(*v) for v in zip(t, xd)]
     s0,s1 = zip(*output)
 
@@ -86,7 +88,31 @@ def diff_filters_benchmark():
     plt.tight_layout()
     plt.show()
 
+def process_measurements():
+    data = load_logs_csv('data/exp.csv')
+    t = data['t']
+    theta = data['theta']
+    dtheta = data['dtheta']
+    torque = data['torque']
+    diff_filter = SlidingDiffFilter(1300.)
+    out = [diff_filter(*v) for v in zip(t, theta)]
+    w0,w1,_ = zip(*out)
+    ax = plt.subplot(131)
+    plt.grid(True)
+    plt.plot(t, theta)
+    plt.plot(t, w0)
+    plt.subplot(132, sharex=ax)
+    plt.grid(True)
+    plt.plot(t, dtheta)
+    plt.plot(t, w1)
+    plt.subplot(133, sharex=ax)
+    plt.grid(True)
+    plt.plot(t, torque)
+    plt.show()
 
 def test():
-    derivatives_estimator_test()
-    diff_filters_benchmark()
+    # derivatives_estimator_test()
+    # diff_filters_benchmark()
+    process_measurements()
+
+test()

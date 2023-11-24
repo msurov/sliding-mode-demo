@@ -67,6 +67,7 @@ class SlidingDiffFilter:
 
         if self.t is None:
             self.t = t
+            self.state[0] = u
 
         dz0 = -lam[k] * pow(L, 1 / (k + 1)) * spow(z[0] - u, k / (k + 1)) + z[1]
         dz1 = -lam[k-1] * pow(L, 1 / k) * spow(z[1] - dz0, (k - 1) / k) + z[2]
