@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import make_interp_spline
-from integrator import solve_ivp_fixed
-from diff_filters import DiffFilter, SlidingDiffFilter, sign, spow
-from sliding_mode_demo.common import load_logs_csv
+from .integrator import solve_ivp_fixed
+from .diff_filters import DiffFilter, SlidingDiffFilter, sign, spow
+from .common import load_logs_csv
 
 
 def derivatives_estimator_test():
@@ -111,8 +111,6 @@ def process_measurements():
     plt.show()
 
 def test():
-    # derivatives_estimator_test()
+    derivatives_estimator_test()
     # diff_filters_benchmark()
-    process_measurements()
-
-test()
+    # process_measurements()

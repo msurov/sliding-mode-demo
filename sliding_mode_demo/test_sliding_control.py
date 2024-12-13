@@ -2,8 +2,8 @@ from typing import Any
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
-from simulation import simulate
-from integrator import Integrator
+from .simulation import simulate
+from .integrator import Integrator
 
 
 class SuperTwisting:
@@ -72,7 +72,7 @@ def process_tests(sys, fb, tspan, step):
 
     for ic in ic_list:
         fb.reset()
-        solx, solu, solfb = simulate(sys, fb, initial_state=ic, t_eval=t, state_disturbance=0.1)
+        solx, solu, solfb = simulate(sys, fb, x0=ic, t=t)
         plt.plot(solx[:,0], solx[:,1], '-', color='blue', lw=0.5, alpha=0.5)
 
     plt.subplot(222)

@@ -3,7 +3,14 @@ import numpy as np
 from copy import copy
 from delay_filter import Delay
 from fixed_step_integrator import FixedStepIntegrator
+from dataclasses import dataclass
 
+@dataclass
+class SimulationResult:
+    t : np.ndarray
+    x : np.ndarray
+    u : np.ndarray
+    controller_internal_state : np.ndarray
 
 class ControlSystemSimulator:
     def __init__(self, sysrhs : callable, ctrlinput : callable, 
@@ -72,13 +79,12 @@ class ControlSystemSimulator:
             if hasattr(self.ctrlinput, 'state'):
                 solfb.append(copy(self.ctrlinput.state))
 
-        result = {
-            't': np.asanyarray(solt),
-            'x': np.asanyarray(solx),
-            'u': np.asanyarray(solu),
-            'feedback_internal_state': solfb
-        }
-        return result
+        return SimulationResult(
+            t = np.asanyarray(solt),
+            x = np.asanyarray(solx),
+            u = np.asanyarray(solu),
+            controller_internal_state = solfb
+        )
 
 
 def simulate(sys, fb, x0, t, u_delay=0, x_delay=0):
